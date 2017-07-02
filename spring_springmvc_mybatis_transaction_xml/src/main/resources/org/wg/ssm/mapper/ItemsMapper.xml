@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wg.ssm.mapper.ItemsMapper">
+    <resultMap id="BaseResultMap" type="org.wg.ssm.po.Items">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="REAL"/>
+        <result column="pic" property="pic" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="org.wg.ssm.po.Items"
+               extends="BaseResultMap">
+        <result column="detail" property="detail" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem"
+                                             open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria"
+                     separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem"
+                                             open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, name, price, pic, createtime
+    </sql>
+    <sql id="Blob_Column_List">
+        detail
+    </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="org.wg.ssm.po.ItemsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from items
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="org.wg.ssm.po.ItemsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from items
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from items
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from items
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="org.wg.ssm.po.ItemsExample">
+        delete from items
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="org.wg.ssm.po.Items">
+        insert into items (id, name, price,
+        pic, createtime, detail
+        )
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+        #{price,jdbcType=REAL},
+        #{pic,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{detail,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="org.wg.ssm.po.Items">
+        insert into items
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=REAL},
+            </if>
+            <if test="pic != null">
+                #{pic,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="org.wg.ssm.po.ItemsExample"
+            resultType="java.lang.Integer">
+        select count(*) from items
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update items
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.price != null">
+                price = #{record.price,jdbcType=REAL},
+            </if>
+            <if test="record.pic != null">
+                pic = #{record.pic,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createtime != null">
+                createtime = #{record.createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.detail != null">
+                detail = #{record.detail,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update items
+        set id = #{record.id,jdbcType=INTEGER},
+        name = #{record.name,jdbcType=VARCHAR},
+        price = #{record.price,jdbcType=REAL},
+        pic = #{record.pic,jdbcType=VARCHAR},
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+        detail = #{record.detail,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update items
+        set id = #{record.id,jdbcType=INTEGER},
+        name = #{record.name,jdbcType=VARCHAR},
+        price = #{record.price,jdbcType=REAL},
+        pic = #{record.pic,jdbcType=VARCHAR},
+        createtime = #{record.createtime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="org.wg.ssm.po.Items">
+        update items
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=REAL},
+            </if>
+            <if test="pic != null">
+                pic = #{pic,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.wg.ssm.po.Items">
+        update items
+        set name = #{name,jdbcType=VARCHAR},
+        price = #{price,jdbcType=REAL},
+        pic = #{pic,jdbcType=VARCHAR},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+        detail = #{detail,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.wg.ssm.po.Items">
+        update items
+        set name = #{name,jdbcType=VARCHAR},
+        price = #{price,jdbcType=REAL},
+        pic = #{pic,jdbcType=VARCHAR},
+        createtime = #{createtime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 批量更新之Case When -->
+    <update id="batchUpdateByCaseWhen" parameterType="list">
+        update items_copy
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="name = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.name != null">
+                        when id=#{i.id} then #{i.name}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="price = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.price != null">
+                        when id=#{i.id} then #{i.price}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="detail = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.detail!=null">
+                        when id=#{i.id} then #{i.detail}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="pic =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.pic!=null">
+                        when id=#{i.id} then #{i.pic}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="createtime =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.createtime!=null">
+                        when id=#{i.id} then #{i.createtime}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <!-- 		<foreach collection="list" separator="or" item="i" index="index"> -->
+        <!-- 			id=#{i.id} -->
+        <!-- 		</foreach> -->
+        <foreach collection="list" open="id in (" close=")" separator="," item="i" index="index">
+            #{i.id}
+        </foreach>
+    </update>
+
+    <!-- 	批量更新之replace into -->
+    <insert id="batchUpdateByPrimaryKeyWithBLOBsByReplaceInto" useGeneratedKeys="true" parameterType="list">
+        replace into items_copy
+        (id, name, price, detail, pic, createtime)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.id}, #{item.name}, #{item.price}, #{item.detail}, #{item.pic}, #{item.createtime})
+        </foreach>
+    </insert>
+
+    <!-- 	批量更新之insert into … on duplicate key update -->
+    <update id="batchUpdateByPrimaryKeyWithBLOBsByInsertInto" parameterType="list">
+        insert into items_copy
+        (id, name, price, detail, pic, createtime)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.id}, #{item.name}, #{item.price}, #{item.detail}, #{item.pic}, #{item.createtime})
+        </foreach>
+        on duplicate key update
+        id = values(id)
+    </update>
+
+
+    <!-- replace into  和insert into on duplicate key update的不同在于： -->
+    <!-- replace into　操作本质是对重复的记录先delete 后insert，如果更新的字段不全会将缺失的字段置为缺省值 -->
+    <!-- insert into 则是只update重复记录，不会改变其它字段。 -->
+
+    <!-- 1.如果表中不存在主键记录，replace和insert*update都与insert是一样的特点。 -->
+    <!-- 2.如 果表中存在主键记录，replace相当于执行delete 和 insert两条操作， -->
+    <!-- 而insert*update的相当于执行if exist do update else do insert操作。 -->
+    <!-- 因此，如果replace填充的字段不全，则会导致未被更新的字段都会修改为默认值， -->
+    <!-- 并且如果有自增id的话，自增id会变化为最新的 值（这样如果是以自增id为标志的话可能导致记录丢失）； -->
+    <!-- 而insert*update只是更新部分字段，对于未被更新的字段不会变化（不会强制修改为默 认值）。 -->
+</mapper>
