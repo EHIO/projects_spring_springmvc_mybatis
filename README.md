@@ -1,2 +1,2 @@
-# projects_spring_springmvc_mybatis
-spring, springmvc, mybatis整合例子
+# ssm-helloworld
+Spring、 SpringMVC和MyBatis框架整合
