@@ -139,7 +139,7 @@
 
             chunked: true,
             // 文件接收服务端。
-            server: '/uploads/fileUpload2.action',
+            server: '/uploads/fileUpload.action',
             fileNumLimit: 300,
             fileSizeLimit: 5 * 1024 * 1024,    // 200 M
             fileSingleSizeLimit: 1 * 1024 * 1024    // 50 M
@@ -326,7 +326,7 @@
             } else if (state === 'confirm') {
                 stats = uploader.getStats();
                 if (stats.uploadFailNum) {
-                    text = '已成功上传' + stats.successNum + '张照片至XX相册，' +
+                    text = '已成功上传' + stats.successNum + '张照片，' +
                         stats.uploadFailNum + '张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
                 }
 
