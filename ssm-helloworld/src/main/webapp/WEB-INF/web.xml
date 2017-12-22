@@ -12,6 +12,18 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <!--编码过虑器-->
+    <!--
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.wg.ssm.filter.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    -->
+
     <!--springmvc 前端控制器-->
     <servlet>
         <servlet-name>springmvc</servlet-name>
