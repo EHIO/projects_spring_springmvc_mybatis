@@ -307,7 +307,7 @@
     height: 40px;
     width: 100%;
     z-index: 200;
-    background: url(../images/success.png) no-repeat right bottom;
+    background: url(/asset/images/success.png) no-repeat right bottom;
 }
 
 #uploader .filelist div.file-panel {
