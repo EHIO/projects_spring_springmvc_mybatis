@@ -3,8 +3,8 @@
 <html>
 <body>
 <h2>Hello World!</h2>
-<c:out value="${pageContext.request.contextPath}"></c:out>
+<c:out value="${pageContext.request.contextPath}/hello"></c:out> <br />
 
-<c:out value="${'this is print by <c:out>'}" /><br/>
+<c:out value="fff"></c:out>
 </body>
 </html>
