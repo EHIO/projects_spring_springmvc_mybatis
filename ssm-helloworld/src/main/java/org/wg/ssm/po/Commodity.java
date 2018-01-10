@@ -15,7 +15,7 @@ public class Commodity implements Serializable {
     /**
      * 库存量
      */
-    private String stockLimit;
+    private Integer stockLimit;
     /**
      * 创建时间
      */
@@ -41,11 +41,11 @@ public class Commodity implements Serializable {
         this.name = name;
     }
 
-    public String getStockLimit() {
+    public Integer getStockLimit() {
         return stockLimit;
     }
 
-    public void setStockLimit(String stockLimit) {
+    public void setStockLimit(Integer stockLimit) {
         this.stockLimit = stockLimit;
     }
 

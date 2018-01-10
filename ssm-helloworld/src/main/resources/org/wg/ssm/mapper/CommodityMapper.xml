@@ -2,20 +2,78 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.wg.ssm.mapper.CommodityMapper">
 
-    <resultMap id="BaseResultMap" type="org.wg.ssm.po.Commodity" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="name" property="name" jdbcType="VARCHAR" />
-        <result column="stock_limit" property="stockLimit" jdbcType="INTEGER" />
-        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
-        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <resultMap id="BaseResultMap" type="org.wg.ssm.po.Commodity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="stock_limit" property="stockLimit" jdbcType="INTEGER"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id, name, stock_limit, gmt_modified, gmt_create
     </sql>
 
-    <select id="getById" resultMap="BaseResultMap" parameterType="int">
-        select <include refid="Base_Column_List" /> from commodity where id = #{id}
+    <select id="getByPrimaryKey" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from commodity where id = #{id}
     </select>
 
+    <insert id="insertSelective" parameterType="commodity">
+        insert into commodity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="stockLimit != null">
+                stock_limit,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="stockLimit != null">
+                #{stockLimit,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="commodity">
+        update commodity
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="stockLimit != null">
+                stock_limit = #{stockLimit,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>
