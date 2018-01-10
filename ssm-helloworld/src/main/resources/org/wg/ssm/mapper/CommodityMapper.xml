@@ -76,4 +76,9 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <update id="updateStock">
+        update commodity set stock_limit = stock_limit + #{value} where id = #{id}
+    </update>
+
 </mapper>

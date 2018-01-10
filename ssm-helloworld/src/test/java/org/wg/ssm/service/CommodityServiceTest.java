@@ -41,27 +41,21 @@ public class CommodityServiceTest {
 
     @Test
     public void testAdd() throws ServiceException {
-        Commodity commodity = commodityService.getById(1);
-        Integer stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
-        commodity.setStockLimit(stockLimit + 2);
-        int count = commodityService.updateById(commodity);
-        logger.info("count:" + count);
-        commodity = commodityService.getById(1);
-        stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
+        commodityService.addStock();
     }
 
     @Test
     public void testSubtract() throws ServiceException {
-        Commodity commodity = commodityService.getById(1);
-        Integer stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
-        commodity.setStockLimit(stockLimit - 1);
-        int count = commodityService.updateById(commodity);
-        logger.info("count:" + count);
-        commodity = commodityService.getById(1);
-        stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
+        commodityService.subStock();
+    }
+
+    @Test
+    public void testAdd2() throws ServiceException {
+        commodityService.addStock2();
+    }
+
+    @Test
+    public void testSubtract2() throws ServiceException {
+        commodityService.subStock2();
     }
 }
