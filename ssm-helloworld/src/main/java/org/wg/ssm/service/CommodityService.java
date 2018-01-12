@@ -10,7 +10,13 @@ import org.wg.ssm.po.Commodity;
 public interface CommodityService extends BaseCrudService {
 
 
-    void addStock();
+    /**
+     * 测试事务回滚情况
+     * 默认Spring事务只在发生未被捕获的RuntimeException才回滚
+     */
+    void transactionaRollBack() throws Exception;
+
+    void addStock() throws Exception;
 
     void subStock();
 

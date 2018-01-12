@@ -23,6 +23,14 @@ public class CommodityServiceTest {
     @Resource
     private CommodityService commodityService;
 
+
+
+
+    @Test
+    public void testTransactionaRollBack() throws Exception {
+        commodityService.transactionaRollBack();
+    }
+
     @Test
     public void save() throws ServiceException {
         Commodity commodity = new Commodity();
@@ -40,7 +48,7 @@ public class CommodityServiceTest {
     }
 
     @Test
-    public void testAdd() throws ServiceException {
+    public void testAdd() throws Exception {
         commodityService.addStock();
     }
 

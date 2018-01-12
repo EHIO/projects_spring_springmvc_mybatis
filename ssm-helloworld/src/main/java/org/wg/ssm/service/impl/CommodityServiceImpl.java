@@ -24,6 +24,17 @@ public class CommodityServiceImpl extends BaseCrudServiceImpl implements Commodi
         return commodityMapper;
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void transactionaRollBack() throws Exception {
+        Commodity commodity = this.getById(1);
+        Integer stockLimit = commodity.getStockLimit();
+        logger.info("库存量：" + stockLimit);
+        commodity.setStockLimit(stockLimit + 2);
+        int count = this.updateById(commodity);
+        throw new Exception("Exception");
+    }
+
     @Transactional
     @Override
     public void addStock() {
