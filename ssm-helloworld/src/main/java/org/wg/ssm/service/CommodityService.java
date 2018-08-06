@@ -18,11 +18,17 @@ public interface CommodityService extends BaseCrudService {
 
     void addStock() throws Exception;
 
-    void subStock();
 
-    void addStock2();
+    /**
+     * 测试默认传播行为
+     */
+    void propagationRequired();
 
-    void subStock2();
+//    void subStock();
+//
+//    void addStock2();
+//
+//    void subStock2();
 
-    int updateStock(int value, int id);
+//    int updateStock(int value, int id);
 }

@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.wg.ssm.exception.ServiceException;
@@ -31,6 +32,17 @@ public class CommodityServiceTest {
         commodityService.transactionaRollBack();
     }
 
+
+    /**
+     * 测试默认事务
+     * @throws Exception
+     */
+    @Test
+    public void testPropagationRequired() throws Exception {
+        commodityService.propagationRequired();
+    }
+
+
     @Test
     public void save() throws ServiceException {
         Commodity commodity = new Commodity();
@@ -49,21 +61,25 @@ public class CommodityServiceTest {
 
     @Test
     public void testAdd() throws Exception {
+
+        System.out.println(AopUtils.isAopProxy(commodityService));
+        System.out.println(AopUtils.isCglibProxy(commodityService));
+        System.out.println(AopUtils.isJdkDynamicProxy(commodityService));
         commodityService.addStock();
     }
 
-    @Test
-    public void testSubtract() throws ServiceException {
-        commodityService.subStock();
-    }
-
-    @Test
-    public void testAdd2() throws ServiceException {
-        commodityService.addStock2();
-    }
-
-    @Test
-    public void testSubtract2() throws ServiceException {
-        commodityService.subStock2();
-    }
+//    @Test
+//    public void testSubtract() throws ServiceException {
+//        commodityService.subStock();
+//    }
+//
+//    @Test
+//    public void testAdd2() throws ServiceException {
+//        commodityService.addStock2();
+//    }
+//
+//    @Test
+//    public void testSubtract2() throws ServiceException {
+//        commodityService.subStock2();
+//    }
 }

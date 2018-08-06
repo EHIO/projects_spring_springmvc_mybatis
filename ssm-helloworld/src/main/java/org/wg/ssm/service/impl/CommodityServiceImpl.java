@@ -1,14 +1,20 @@
 package org.wg.ssm.service.impl;
 
+import org.springframework.aop.framework.AopContext;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.wg.ssm.exception.ServiceException;
 import org.wg.ssm.mapper.CommodityMapper;
 import org.wg.ssm.mapper.CrudMapper;
 import org.wg.ssm.po.Commodity;
+import org.wg.ssm.po.User;
 import org.wg.ssm.service.CommodityService;
+import org.wg.ssm.service.UserService;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 商品管理
@@ -19,12 +25,15 @@ public class CommodityServiceImpl extends BaseCrudServiceImpl implements Commodi
     @Resource
     private CommodityMapper commodityMapper;
 
+    @Resource
+    private UserService userService;
+
     @Override
     public CrudMapper init() {
         return commodityMapper;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional//(rollbackFor = Exception.class)
     @Override
     public void transactionaRollBack() throws Exception {
         Commodity commodity = this.getById(1);
@@ -35,63 +44,51 @@ public class CommodityServiceImpl extends BaseCrudServiceImpl implements Commodi
         throw new Exception("Exception");
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public void addStock() {
+    public void addStock() throws Exception {
         Commodity commodity = this.getById(1);
-        Integer stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
-        commodity.setStockLimit(stockLimit + 2);
-        int count = this.updateById(commodity);
-        logger.info("count:" + count);
-        commodity = this.getById(1);
-        stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
-    }
+        logger.info("库存量更新前：" + commodity.getStockLimit());
 
-    @Transactional
-    @Override
-    public void subStock() {
-        Commodity commodity = this.getById(1);
-        Integer stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
-        commodity.setStockLimit(stockLimit - 1);
-        int count = this.updateById(commodity);
+        int count = updateStock(2, commodity.getId());
+//            int i = 1 / 0;
         logger.info("count:" + count);
         commodity = this.getById(1);
-        stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
+        logger.info("库存量更新后：" + commodity.getStockLimit());
     }
 
     @Transactional
     @Override
-    public void addStock2() {
+    public void propagationRequired()  {
         Commodity commodity = this.getById(1);
-        Integer stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
-        int count = this.updateStock(2, 1);
-        logger.info("count:" + count);
-        commodity = this.getById(1);
-        stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
+        logger.info("库存量更新前：" + commodity.getStockLimit());
+        commodity.setGmtModified(new Date());
+        updateById(commodity);
+
+        User user = userService.getById(1);
+        user.setGmtModified(commodity.getGmtModified());
+//        try {
+
+            userService.update(user);
+//        } catch (Exception e) {
+//            logger.error(e.getMessage(), e);
+//        }
+        System.out.println(111111);
     }
 
-    @Transactional
-    @Override
-    public void subStock2() {
-        Commodity commodity = this.getById(1);
-        Integer stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
-        int count = this.updateStock(-1, 1);
-        logger.info("count:" + count);
-        commodity = this.getById(1);
-        stockLimit = commodity.getStockLimit();
-        logger.info("库存量：" + stockLimit);
+    //    @Override
+//    @Transactional(propagation = Propagation.NEVER)
+    public int updateStock(int value, int id) throws Exception {
+//        try {
+            int count = commodityMapper.updateStock(value, id);
+
+            int i = 1 / 0;
+//        } catch (Exception e) {
+//            logger.error(e.getMessage(), e);
+//            throw new Exception();
+//        }
+        return 0;
     }
 
-    @Override
-    public int updateStock(int value, int id) {
 
-        return commodityMapper.updateStock(value, id);
-    }
 }
