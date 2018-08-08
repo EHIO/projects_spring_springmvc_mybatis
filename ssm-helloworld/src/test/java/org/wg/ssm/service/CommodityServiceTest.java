@@ -68,18 +68,4 @@ public class CommodityServiceTest {
         commodityService.addStock();
     }
 
-//    @Test
-//    public void testSubtract() throws ServiceException {
-//        commodityService.subStock();
-//    }
-//
-//    @Test
-//    public void testAdd2() throws ServiceException {
-//        commodityService.addStock2();
-//    }
-//
-//    @Test
-//    public void testSubtract2() throws ServiceException {
-//        commodityService.subStock2();
-//    }
 }

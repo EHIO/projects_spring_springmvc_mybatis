@@ -1,11 +1,7 @@
 package org.wg.ssm.service.impl;
 
-import org.springframework.aop.framework.AopContext;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.wg.ssm.exception.ServiceException;
 import org.wg.ssm.mapper.CommodityMapper;
 import org.wg.ssm.mapper.CrudMapper;
 import org.wg.ssm.po.Commodity;
@@ -51,15 +47,17 @@ public class CommodityServiceImpl extends BaseCrudServiceImpl implements Commodi
         logger.info("库存量更新前：" + commodity.getStockLimit());
 
         int count = updateStock(2, commodity.getId());
-//            int i = 1 / 0;
         logger.info("count:" + count);
+        int count2 = updateStock2(2, commodity.getId());
+//            int i = 1 / 0;
+        logger.info("count2:" + count2);
         commodity = this.getById(1);
         logger.info("库存量更新后：" + commodity.getStockLimit());
     }
 
     @Transactional
     @Override
-    public void propagationRequired()  {
+    public void propagationRequired() {
         Commodity commodity = this.getById(1);
         logger.info("库存量更新前：" + commodity.getStockLimit());
         commodity.setGmtModified(new Date());
@@ -69,7 +67,7 @@ public class CommodityServiceImpl extends BaseCrudServiceImpl implements Commodi
         user.setGmtModified(commodity.getGmtModified());
 //        try {
 
-            userService.update(user);
+        userService.update(user);
 //        } catch (Exception e) {
 //            logger.error(e.getMessage(), e);
 //        }
@@ -78,16 +76,18 @@ public class CommodityServiceImpl extends BaseCrudServiceImpl implements Commodi
 
     //    @Override
 //    @Transactional(propagation = Propagation.NEVER)
-    public int updateStock(int value, int id) throws Exception {
-//        try {
-            int count = commodityMapper.updateStock(value, id);
+    public int updateStock(int value, int id) {
+        int count = commodityMapper.updateStock(value, id);
+        return count;
+    }
 
-            int i = 1 / 0;
-//        } catch (Exception e) {
-//            logger.error(e.getMessage(), e);
-//            throw new Exception();
-//        }
-        return 0;
+    public int updateStock2(int value, int id) {
+
+        int count = commodityMapper.updateStock(value, id);
+
+        int i = 1 / 0;
+
+        return count;
     }
 
 

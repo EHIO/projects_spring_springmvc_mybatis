@@ -24,11 +24,6 @@ public interface CommodityService extends BaseCrudService {
      */
     void propagationRequired();
 
-//    void subStock();
-//
-//    void addStock2();
-//
-//    void subStock2();
 
 //    int updateStock(int value, int id);
 }

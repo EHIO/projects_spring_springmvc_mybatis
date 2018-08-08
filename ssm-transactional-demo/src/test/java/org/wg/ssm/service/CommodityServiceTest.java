@@ -59,6 +59,12 @@ public class CommodityServiceTest {
         logger.info(commodity.toString());
     }
 
+
+    /**
+     * 测试同类中的不同方法调用出现异常回滚情况
+     * 结果：全部回滚
+     * @throws Exception
+     */
     @Test
     public void testAdd() throws Exception {
 
