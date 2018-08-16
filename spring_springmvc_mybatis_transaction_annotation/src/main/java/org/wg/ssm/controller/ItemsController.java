@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -219,49 +220,23 @@ public class ItemsController {
     @RequestMapping("/editItemsQuery")
     public ModelAndView editItemsQuery(HttpServletRequest request,
                                        ItemsQueryVo itemsQueryVo) throws Exception {
-
-        // 调用service查找 数据库，查询商品列表
         List<ItemsCustom> itemsList = itemsService.findItemsList(itemsQueryVo);
-
-        // 返回ModelAndView
         ModelAndView modelAndView = new ModelAndView();
-        // 相当 于request的setAttribut，在jsp页面中通过itemsList取数据
         modelAndView.addObject("itemsList", itemsList);
-
         modelAndView.setViewName("items/editItemsQuery");
-
         return modelAndView;
-
     }
 
     // 批量修改商品提交
     // 通过ItemsQueryVo接收批量提交的商品信息，将商品信息存储到itemsQueryVo中itemsList属性中。
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/editItemsAllSubmit")
     public String editItemsAllSubmit(ItemsQueryVo itemsQueryVo) throws Exception {
-        /*
-        for (ItemsCustom itemsCustom : itemsList.getItemsList()) {
-			itemsService.updateItems(itemsCustom);
-		}
-		*/
-
-        itemsService.batchUpdateItems(itemsQueryVo);
+        try {
+            itemsService.batchUpdateItems(itemsQueryVo);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
         return "success";
-    }
-
-    @RequestMapping("/encodeUI")
-    public String encodeUI()
-            throws Exception {
-        return "encode/encode";
-    }
-
-    @RequestMapping("/encode")
-    public void demo(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-//        request.setCharacterEncoding("utf-8");
-        String name = request.getParameter("username");
-//        name = new String(name.getBytes("iso-8859-1"), "utf-8");
-//        response.setCharacterEncoding("utf-8");
-//        response.setCharacterEncoding("gbk");
-        response.getWriter().print(name);
     }
 }
