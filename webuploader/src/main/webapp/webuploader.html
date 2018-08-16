@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="asset/js/extend/webuploader/webuploader.css"><!-- 引用插件css -->
+    <link rel="stylesheet" type="text/css" href="assets/js/extend/webuploader/webuploader.css"><!-- 引用插件css -->
 </head>
 <body>
 <div id="uploader-demo">
@@ -12,9 +12,9 @@
 </div>
 </body>
 
-<script type="text/javascript" src="asset/js/extend/jquery/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="assets/js/extend/jquery/jquery-3.2.1.js"></script>
 <!-- 引用插件js -->
-<script type="text/javascript" src="asset/js/extend/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="assets/js/extend/webuploader/webuploader.js"></script>
 <script type="text/javascript">
     var $list = $("#fileList");   //这几个初始化全局的百度文档上没说明，好蛋疼
     var thumbnailWidth = 100;   //缩略图高度和宽度 （单位是像素），当宽高度是0~1的时候，是按照百分比计算，具体可以看api文档
@@ -23,7 +23,7 @@
         // 选完文件后，是否自动上传。
         auto: true,
         // swf文件路径
-        swf: 'asset/js/extend/webuploader/Uploader.swf', //加载swf文件，路径一定要对
+        swf: 'assets/js/extend/webuploader/Uploader.swf', //加载swf文件，路径一定要对
 
         // 文件接收服务端。
         server: '/uploads/fileUpload.action',
