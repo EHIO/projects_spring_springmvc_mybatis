@@ -1,5 +1,7 @@
 package org.wg.ssm.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,8 @@ import java.util.UUID;
 @RequestMapping("/items")
 public class ItemsController {
 
+    public static final Logger logger = LoggerFactory.getLogger(ItemsController.class);
+
     @Autowired
     private ItemsService itemsService;
 
@@ -55,25 +59,22 @@ public class ItemsController {
     @RequestMapping("/queryItems")
     public ModelAndView queryItems(HttpServletRequest request,
                                    ItemsQueryVo itemsQueryVo) throws Exception {
-        // 测试forward后request是否可以共享
-        System.err.println(request.getParameter("id"));
-        System.err.println("------------");
-        // 调用service查找 数据库，查询商品列表
-        List<ItemsCustom> itemsList = itemsService.findItemsList(itemsQueryVo);
-
-        // 返回ModelAndView
         ModelAndView modelAndView = new ModelAndView();
-        // 相当 于request的setAttribut，在jsp页面中通过itemsList取数据
-        modelAndView.addObject("itemsList", itemsList);
+        try {
+            List<ItemsCustom> itemsList = itemsService.findItemsList(itemsQueryVo);
+            // 返回ModelAndView
+            // 相当 于request的setAttribut，在jsp页面中通过itemsList取数据
+            modelAndView.addObject("itemsList", itemsList);
 
-        // 指定视图
-        // 下边的路径，如果在视图解析器中配置jsp路径的前缀和jsp路径的后缀，修改为
-        // modelAndView.setViewName("/WEB-INF/jsp/items/itemsList.jsp");
-        // 上边的路径配置可以不在程序中指定jsp路径的前缀和jsp路径的后缀
-        modelAndView.setViewName("items/itemsList");
-
+            // 指定视图
+            // 下边的路径，如果在视图解析器中配置jsp路径的前缀和jsp路径的后缀，修改为
+            // modelAndView.setViewName("/WEB-INF/jsp/items/itemsList.jsp");
+            // 上边的路径配置可以不在程序中指定jsp路径的前缀和jsp路径的后缀
+            modelAndView.setViewName("items/itemsList");
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
         return modelAndView;
-
     }
 
     // 商品信息修改页面显示

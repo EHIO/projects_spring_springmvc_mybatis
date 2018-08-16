@@ -5,6 +5,9 @@
 <configuration>
 
     <!-- 全局setting配置，根据需要添加 -->
+    <settings>
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
 
     <!-- 配置别名 -->
     <typeAliases>
